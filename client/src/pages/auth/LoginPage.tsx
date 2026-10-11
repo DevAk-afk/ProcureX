@@ -38,9 +38,12 @@ export const LoginPage: React.FC = () => {
     const success = await login(email, password);
     setSubmitting(false);
     if (success) {
-      // Role-based dashboard redirect is done via context or target dashboard route
-      const storedUser = JSON.parse(localStorage.getItem('procurex_user') || '{}');
-      navigate(getRoleDashboardRoute(storedUser.role));
+      try {
+        const storedUser = JSON.parse(localStorage.getItem('procurex_user') || '{}');
+        navigate(getRoleDashboardRoute(storedUser.role));
+      } catch {
+        navigate('/app');
+      }
     }
   };
 

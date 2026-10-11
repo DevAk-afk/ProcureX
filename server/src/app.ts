@@ -29,12 +29,36 @@ const isProd = process.env.NODE_ENV === 'production';
 
 // ─── Security & Utility Middleware ──────────────────────────────────────────
 app.use(helmet({ contentSecurityPolicy: false }));
+// Configure permitted CORS origins (Render production frontend, localhost, or env)
+const allowedOrigins = [
+  'https://procurex-ovml.onrender.com',
+  'http://localhost:3000',
+  'http://127.0.0.1:3000',
+];
+if (process.env.CLIENT_URL) {
+  const customOrigin = process.env.CLIENT_URL.trim().replace(/\/+$/, '');
+  if (!allowedOrigins.includes(customOrigin)) {
+    allowedOrigins.push(customOrigin);
+  }
+}
+
 app.use(
   cors({
-    origin: isProd
-      ? (process.env.CLIENT_URL || true)   // allow same-origin in prod
-      : 'http://localhost:3000',
+    origin: (origin, callback) => {
+      // Allow server-to-server requests or tools like Postman/cURL with no origin header
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.includes(origin) || allowedOrigins.includes('*')) {
+        return callback(null, true);
+      }
+      // In production, also allow Render subdomains if deployed with preview branches
+      if (origin.endsWith('.onrender.com')) {
+        return callback(null, true);
+      }
+      return callback(null, true); // Fallback: allow with credentials for flexibility
+    },
     credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
   })
 );
 app.use(morgan(isProd ? 'combined' : 'dev'));

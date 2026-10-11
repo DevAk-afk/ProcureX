@@ -33,11 +33,24 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const res = await api.get('/auth/me');
       if (res.data.success && res.data.user) {
         setUser(res.data.user);
+        localStorage.setItem('procurex_user', JSON.stringify(res.data.user));
+      } else {
+        setUser(null);
+        localStorage.removeItem('procurex_user');
+      }
+    } catch {
+      // If network fails or session expired, check if we have offline/stored user token
+      const stored = localStorage.getItem('procurex_user');
+      const token = localStorage.getItem('procurex_token');
+      if (stored && token) {
+        try {
+          setUser(JSON.parse(stored));
+        } catch {
+          setUser(null);
+        }
       } else {
         setUser(null);
       }
-    } catch {
-      setUser(null);
     } finally {
       setIsLoading(false);
     }
@@ -55,6 +68,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setUser(res.data.user);
         if (res.data.token) {
           localStorage.setItem('procurex_token', res.data.token);
+        }
+        if (res.data.user) {
+          localStorage.setItem('procurex_user', JSON.stringify(res.data.user));
         }
         success('Welcome back', `Signed in as ${res.data.user.name} (${res.data.user.role})`);
         return true;
@@ -79,6 +95,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       // Ignore
     } finally {
       localStorage.removeItem('procurex_token');
+      localStorage.removeItem('procurex_user');
       setUser(null);
       success('Logged out', 'You have been safely signed out.');
     }

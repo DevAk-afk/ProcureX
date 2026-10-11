@@ -16,7 +16,7 @@ const sendTokenResponse = (user: any, statusCode: number, res: Response, message
   res.cookie('token', token, {
     httpOnly: true,
     secure: isProduction,
-    sameSite: isProduction ? 'strict' : 'lax',
+    sameSite: isProduction ? 'none' : 'lax', // 'none' required for cross-domain onrender.com subdomains
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
   });
 

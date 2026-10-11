@@ -1,7 +1,21 @@
 import axios from 'axios';
 
+// Priority: VITE_API_BASE_URL > production default > local development proxy
+const getBaseURL = (): string => {
+  const envUrl = import.meta.env.VITE_API_BASE_URL;
+  if (envUrl && typeof envUrl === 'string' && envUrl.trim().length > 0) {
+    const trimmed = envUrl.trim().replace(/\/+$/, '');
+    return trimmed.endsWith('/api/v1') ? trimmed : `${trimmed}/api/v1`;
+  }
+  // In production outside local dev, default to the live Render backend
+  if (import.meta.env.PROD) {
+    return 'https://procurex-api-gpwt.onrender.com/api/v1';
+  }
+  return '/api/v1';
+};
+
 export const api = axios.create({
-  baseURL: '/api/v1',
+  baseURL: getBaseURL(),
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',

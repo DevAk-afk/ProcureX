@@ -29,6 +29,9 @@ export const RegisterPage: React.FC = () => {
         if (res.data.token) {
           localStorage.setItem('procurex_token', res.data.token);
         }
+        if (res.data.user) {
+          localStorage.setItem('procurex_user', JSON.stringify(res.data.user));
+        }
         await refreshUser();
         success('Account created', 'Welcome to ProcureX!');
         navigate('/app');

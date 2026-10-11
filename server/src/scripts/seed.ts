@@ -19,6 +19,59 @@ import { connectDB } from '../config/db.js';
 
 dotenv.config();
 
+export const ensureDemoAccountsSafe = async () => {
+  const defaultAccounts = [
+    {
+      name: 'Alexander Vance',
+      email: 'admin@procurex.com',
+      password: 'Password123!',
+      role: ROLES.ADMIN,
+      department: 'Executive Administration',
+      phone: '+91 98000 00001',
+    },
+    {
+      name: 'Rohit Kulkarni',
+      email: 'proc.manager@procurex.com',
+      password: 'Password123!',
+      role: ROLES.PURCHASE_MANAGER,
+      department: 'Global Sourcing & Procurement',
+      phone: '+91 98000 00002',
+    },
+    {
+      name: 'Rahul Verma',
+      email: 'employee@procurex.com',
+      password: 'Password123!',
+      role: ROLES.EMPLOYEE,
+      department: 'Engineering & DevOps',
+      phone: '+91 98000 00015',
+    },
+    {
+      name: 'Gaurav Patil',
+      email: 'inventory@procurex.com',
+      password: 'Password123!',
+      role: ROLES.INVENTORY_MANAGER,
+      department: 'Warehouse & Logistics',
+      phone: '+91 98000 00006',
+    },
+    {
+      name: 'Arun Krishnan',
+      email: 'vendor@techlogix.com',
+      password: 'Password123!',
+      role: ROLES.VENDOR,
+      department: 'TechLogix Representative',
+      phone: '+91 98450 12345',
+    },
+  ];
+
+  for (const acc of defaultAccounts) {
+    const existing = await User.findOne({ email: acc.email });
+    if (!existing) {
+      await User.create(acc);
+      console.log(`[Seed] Safe created missing demo account: ${acc.email} (${acc.role})`);
+    }
+  }
+};
+
 export const seedDatabase = async (options: { clearExisting?: boolean } = {}) => {
   const shouldClear = options.clearExisting ?? (process.argv.includes('--reset') || process.argv.includes('--force'));
 
@@ -26,6 +79,7 @@ export const seedDatabase = async (options: { clearExisting?: boolean } = {}) =>
   if (existingUsers > 0 && !shouldClear) {
     console.log(`[Seed] Safe mode active: ${existingUsers} existing user accounts detected in database.`);
     console.log('[Seed] Preserving persistent database records. (Use "npm run seed -- --reset" to force clear & reseed).');
+    await ensureDemoAccountsSafe();
     return;
   }
 
