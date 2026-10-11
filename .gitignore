@@ -1,0 +1,23 @@
+# Root
+node_modules/
+.env
+.env.local
+*.log
+.env.*
+# Server
+server/node_modules/
+server/dist/
+server/.env
+
+# Client
+client/node_modules/
+client/dist/
+client/.env
+client/.env.local
+
+# Build artifacts
+*.tsbuildinfo
+
+# OS
+.DS_Store
+Thumbs.db

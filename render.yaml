@@ -1,0 +1,29 @@
+services:
+  # ─────────────────────────────────────────────────────────────────────────────
+  # ProcureX — Single Web Service
+  # The Express server builds + serves the React frontend as static files.
+  # One URL handles everything: API routes (/api/v1/*) + React SPA (everything else)
+  # ─────────────────────────────────────────────────────────────────────────────
+  - type: web
+    name: procurex
+    runtime: node
+    region: singapore
+    plan: free
+    buildCommand: npm run render:build
+    startCommand: npm start
+    healthCheckPath: /api/v1/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: MONGODB_URI
+        sync: false            # ← Paste your MongoDB Atlas URI here in Render dashboard
+      - key: JWT_SECRET
+        generateValue: true    # Render auto-generates a secure random string
+      - key: DEFAULT_CURRENCY
+        value: INR
+      - key: DEFAULT_TAX_SLAB
+        value: 18
+      - key: GEMINI_API_KEY
+        sync: false            # Optional — for real AI responses (leave blank to use fallback)
