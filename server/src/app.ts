@@ -4,7 +4,6 @@ import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
-import path from 'path';
 
 import authRoutes from './routes/auth.routes.js';
 import vendorRoutes from './routes/vendor.routes.js';
@@ -87,17 +86,16 @@ app.use('/api/v1/automations', automationRoutes);
 app.use('/api/v1/reports', reportRoutes);
 app.use('/api/v1/ai', aiRoutes);
 
-// ─── Serve React Build in Production ────────────────────────────────────────
-// In production the client is built into ../client/dist and served statically
-if (isProd) {
-  const clientDistPath = path.join(process.cwd(), 'client', 'dist');
-  app.use(express.static(clientDistPath));
-
-  // All non-API routes → serve React's index.html (client-side routing)
-  app.get('*', (_req, res) => {
-    res.sendFile(path.join(clientDistPath, 'index.html'));
+// ─── Root Endpoint ───────────────────────────────────────────────────────────
+// Frontend is hosted separately — just confirm the API is reachable
+app.get('/', (_req, res) => {
+  res.json({
+    status: 'ok',
+    message: 'ProcureX API is running.',
+    frontend: process.env.CLIENT_URL || 'https://procurex-ovml.onrender.com',
+    docs: '/api/v1/health',
   });
-}
+});
 
 // ─── Centralized Error Handler ───────────────────────────────────────────────
 app.use(errorHandler);
