@@ -57,8 +57,8 @@ export const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-procure-bg flex flex-col justify-center py-12 sm:px-6 lg:px-8 font-sans">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
+    <div className="min-h-screen bg-procure-bg flex flex-col justify-center py-8 sm:py-12 px-3 sm:px-6 lg:px-8 font-sans">
+      <div className="mx-auto w-full max-w-[92vw] sm:max-w-md text-center">
         <Link to="/" className="inline-flex items-center gap-2 mb-3">
           <div className="w-10 h-10 rounded-xl bg-teal-500 flex items-center justify-center text-white font-black text-xl shadow-sm">
             P
@@ -146,7 +146,7 @@ export const LoginPage: React.FC = () => {
               <span className="text-[10px] text-slate-400">Password: Password123!</span>
             </div>
 
-            <div className="grid grid-cols-2 gap-2 mt-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
               {DEMO_ACCOUNTS.map((acc) => (
                 <button
                   key={acc.email}

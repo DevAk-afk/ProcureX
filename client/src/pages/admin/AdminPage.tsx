@@ -149,7 +149,7 @@ export const AdminPage: React.FC = () => {
       </div>
 
       {/* Tab Navigation */}
-      <div className="flex border-b border-slate-200 gap-4 text-xs font-bold">
+      <div className="flex border-b border-slate-200 gap-4 text-xs font-bold overflow-x-auto no-scrollbar whitespace-nowrap py-1">
         {[
           { id: 'overview', label: 'Organization Overview' },
           { id: 'users', label: `User Management (${users.length})` },

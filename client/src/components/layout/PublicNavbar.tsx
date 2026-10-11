@@ -71,11 +71,11 @@ export const PublicNavbar: React.FC = () => {
         </div>
 
         {/* Auth CTA buttons */}
-        <div className="hidden sm:flex items-center gap-3">
+        <div className="hidden sm:flex items-center gap-2 lg:gap-3">
           {user ? (
             <Link
               to="/app"
-              className="inline-flex items-center gap-2 bg-teal-500 hover:bg-teal-600 text-white px-5 py-2.5 rounded-xl font-semibold text-sm shadow-sm transition-all"
+              className="inline-flex items-center gap-2 bg-teal-500 hover:bg-teal-600 text-white px-4 lg:px-5 py-2.5 rounded-xl font-semibold text-xs lg:text-sm shadow-sm transition-all"
             >
               Go to Dashboard <ArrowRight className="w-4 h-4" />
             </Link>
@@ -83,22 +83,22 @@ export const PublicNavbar: React.FC = () => {
             <>
               <Link
                 to="/demo"
-                className="text-xs font-semibold text-teal-700 bg-teal-50 hover:bg-teal-100/80 px-3 py-2 rounded-xl border border-teal-200 transition-colors flex items-center gap-1.5"
+                className="text-xs font-semibold text-teal-700 bg-teal-50 hover:bg-teal-100/80 px-2.5 lg:px-3 py-2 rounded-xl border border-teal-200 transition-colors flex items-center gap-1.5"
                 title="Open isolated demo environment with sample data"
               >
-                <Sparkles className="w-3.5 h-3.5 text-teal-600" /> Explore Demo
+                <Sparkles className="w-3.5 h-3.5 text-teal-600" /> <span className="hidden md:inline">Explore</span> Demo
               </Link>
               <Link
                 to="/login"
-                className="text-sm font-semibold text-slate-700 hover:text-teal-600 px-3.5 py-2 transition-colors"
+                className="text-xs lg:text-sm font-semibold text-slate-700 hover:text-teal-600 px-2.5 lg:px-3.5 py-2 transition-colors"
               >
                 Sign In
               </Link>
               <Link
                 to="/register"
-                className="inline-flex items-center gap-1.5 bg-teal-500 hover:bg-teal-600 text-white px-4 py-2 rounded-xl font-semibold text-sm shadow-sm transition-all"
+                className="inline-flex items-center gap-1.5 bg-teal-500 hover:bg-teal-600 text-white px-3.5 lg:px-4 py-2 rounded-xl font-semibold text-xs lg:text-sm shadow-sm transition-all"
               >
-                Get Started Free
+                Get Started
               </Link>
             </>
           )}
@@ -139,16 +139,23 @@ export const PublicNavbar: React.FC = () => {
           )}
           <div className="pt-3 border-t border-slate-100 flex flex-col gap-2">
             <Link
+              to="/demo"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="w-full text-center py-2.5 font-semibold text-xs text-teal-700 bg-teal-50 border border-teal-200 rounded-xl flex items-center justify-center gap-1.5"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-teal-600" /> Explore Demo
+            </Link>
+            <Link
               to="/login"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="w-full text-center py-2.5 font-semibold text-sm text-slate-700 border border-slate-200 rounded-xl"
+              className="w-full text-center py-2.5 font-semibold text-xs text-slate-700 border border-slate-200 rounded-xl"
             >
               Sign In
             </Link>
             <Link
               to="/register"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="w-full text-center py-2.5 font-semibold text-sm bg-teal-500 text-white rounded-xl shadow-sm"
+              className="w-full text-center py-2.5 font-semibold text-xs bg-teal-500 text-white rounded-xl shadow-sm"
             >
               Get Started Free
             </Link>

@@ -229,11 +229,11 @@ export const AppLayout: React.FC = () => {
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             {/* Current User Role Badge */}
-            <div className="flex items-center gap-1.5 text-xs font-semibold bg-teal-50 text-teal-800 px-3 py-1.5 rounded-xl border border-teal-200">
-              <Shield className="w-3.5 h-3.5 text-teal-600" />
-              <span className="hidden sm:inline">Role:</span> {user?.role || 'Guest'}
+            <div className="flex items-center gap-1.5 text-[11px] sm:text-xs font-semibold bg-teal-50 text-teal-800 px-2 sm:px-3 py-1 sm:py-1.5 rounded-xl border border-teal-200 max-w-[130px] sm:max-w-none truncate">
+              <Shield className="w-3.5 h-3.5 text-teal-600 shrink-0" />
+              <span className="hidden sm:inline">Role:</span> <span className="truncate">{user?.role || 'Guest'}</span>
             </div>
 
             {/* Notification Bell with unread badge */}
@@ -363,7 +363,7 @@ export const AppLayout: React.FC = () => {
         )}
 
         {/* Content Viewport */}
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto">
+        <main className="flex-1 p-3.5 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto overflow-x-hidden">
           <Outlet />
         </main>
       </div>
