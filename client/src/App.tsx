@@ -61,8 +61,14 @@ const RoleBasedRedirect: React.FC = () => {
       return <Navigate to="/vendor" replace />;
     case 'Inventory Manager':
       return <Navigate to="/inventory" replace />;
+    case 'Finance Officer':
+      return <Navigate to="/app/invoices" replace />;
+    case 'Department Manager / Approver':
+      return <Navigate to="/app/approvals" replace />;
     default:
-      return <Navigate to="/admin" replace />;
+      // Unknown roles should land on the general app route, not /admin,
+      // which is restricted and can otherwise cause a redirect loop.
+      return <Navigate to="/app" replace />;
   }
 };
 
