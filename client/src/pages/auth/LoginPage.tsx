@@ -18,6 +18,10 @@ export const getRoleDashboardRoute = (role?: string): string => {
       return '/vendor';
     case 'Inventory Manager':
       return '/inventory';
+    case 'Finance Officer':
+      return '/app/invoices';
+    case 'Department Manager / Approver':
+      return '/app/approvals';
     default:
       return '/app';
   }
